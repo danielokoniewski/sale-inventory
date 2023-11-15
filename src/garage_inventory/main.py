@@ -1,14 +1,19 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from .repository import ListRepository
+from .database import Base, DatabaseRepository
 from .router import router, set_repository
 
 
 @asynccontextmanager
 async def init_app(app: FastAPI):
-    repo = ListRepository()
+    engine = create_engine("sqlite://///home/daniel/dev/python/garage-inventory/my.db", echo=True)
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    repo = DatabaseRepository(Session)
     set_repository(repo)
     yield
 
