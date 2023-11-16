@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "garage-inventory"
+name = "sale-inventory"
 version = "0.1.0"
 description = ""
 authors = ["daniel okoniewski <daniel.okoniewski@gmail.com>"]
 readme = "README.md"
-packages = [{include = "garage_inventory", from = "src"}]
+packages = [{include = "sale_inventory", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -24,10 +24,10 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-db = "garage_inventory.database:main"
+db = "sale_inventory.database:main"
 
 [tool.pytest.ini_options]
-addopts= "--cov=garage_inventory --cov-report term-missing"
+addopts= "--cov=sale_inventory --cov-report term-missing"
 testpaths = [
     "tests"
 ]
@@ -39,10 +39,11 @@ exclude = [
     "build",
     "dist",
     ".venv",
-    ".pytest_cache"
+    ".pytest_cache",
+    "inventory-frontend"
 ]
 per-file-ignores = [
-    "src/garage_inventory/router.py:F821"
+    "src/sale_inventory/router.py:F821"
 ]
 max-line-length = 140
 max-complexity = 10

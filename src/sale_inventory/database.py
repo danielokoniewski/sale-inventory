@@ -7,8 +7,8 @@ from sqlalchemy import String, Text, Date, Float, create_engine, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
-from garage_inventory.entity import Item
-from garage_inventory.repository import BaseRepository
+from sale_inventory.entity import Item
+from sale_inventory.repository import BaseRepository
 
 
 class Base(DeclarativeBase):

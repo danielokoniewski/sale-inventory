@@ -1,9 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from garage_inventory.main import app
-from garage_inventory.repository import ListRepository
-from garage_inventory.router import set_repository
+from sale_inventory.main import app
+from sale_inventory.repository import ListRepository
+from sale_inventory.router import set_repository
 
 
 @pytest.fixture(scope="module")

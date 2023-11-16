@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from src.garage_inventory.entity import Item
+from src.sale_inventory.entity import Item
 
 
 class BaseRepository(ABC):

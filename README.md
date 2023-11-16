@@ -1,5 +1,6 @@
-# garage inventory
-inventory api with frontend to organize a virtual garage sale inventory
+# sale inventory
+Inventory app to help organizing things on sale or to give away.
+Components are: a fastapi backend with a sqlite database and a react frontend
 
 
 # poetry usage
@@ -23,4 +24,15 @@ poetry add --group dev pytest pytest-cov
 
 # build a wheel
 poetry build -f wheel
+```
+
+# npm usage
+```commandline
+cd inventory-frontend
+
+# run dev
+npm start
+
+# build
+npm run build
 ```
