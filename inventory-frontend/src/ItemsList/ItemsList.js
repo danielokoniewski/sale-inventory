@@ -1,96 +1,98 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { showNotification } from '../NotificationArea';
 import './ItemsList.style.css'
 
+const ItemsList = ({ notificationRef }) => {
+  const [items, setItems] = useState([]);
+  const [editItemId, setEditItemId] = useState(null);
+  const [updatedItem, setUpdatedItem] = useState({});
 
-const ItemsList = () => {
-    const [items, setItems] = useState([]);
-    const [editItemId, setEditItemId] = useState(null);
-    const [updatedItem, setUpdatedItem] = useState({});
-    
-    const fetchData = async () => {
-        try {
-          const response = await fetch('http://localhost:8000/items');
-          const data = await response.json();
-          setItems(data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch('http://localhost:8000/items');
+      const data = await response.json();
+      setItems(data);
+    } catch (error) {
+      showNotification(`Error fetching data: ${error}`, 'error', notificationRef)
+    }
+  }, [notificationRef]);
 
-    useEffect(() => {
-        fetchData();
-      }, []);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-    const handleEditClick = (itemId) => {
-        setEditItemId(itemId);
-        // Initialize updatedItem with the current item values
-        const currentItem = items.find((item) => item.id === itemId);
-        setUpdatedItem(currentItem);
-    };
+  const handleEditClick = (itemId) => {
+    setEditItemId(itemId);
+    // Initialize updatedItem with the current item values
+    const currentItem = items.find((item) => item.id === itemId);
+    setUpdatedItem(currentItem);
+  };
 
-    const handleConfirmUpdate = async () => {
-        try {
-            const response = await fetch(`http://localhost:8000/items/${editItemId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedItem),
-            });
+  const handleConfirmUpdate = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/items/${editItemId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedItem),
+      });
 
-            if (response.ok) {
-            // Item updated successfully, reset edit state and fetch updated data
-            setEditItemId(null);
-            setUpdatedItem({});
-            fetchData();
-            } else {
-            console.error('Failed to update item');
-            }
-        } catch (error) {
-            console.error('Error updating item:', error);
-        }
-    };
-    const handleCancelUpdate = () => {
-        // Reset edit state
+      if (response.ok) {
+        // Item updated successfully, reset edit state and fetch updated data
         setEditItemId(null);
         setUpdatedItem({});
-    };
-    
-    const handleDeleteItem = async (itemId) => {
-        try {
-          const response = await fetch(`http://localhost:8000/items/${itemId}`, {
-            method: 'DELETE',
-          });
-    
-          if (response.ok) {
-            // Item deleted successfully, fetch updated data
-            fetchData();
-          } else {
-            console.error('Failed to delete item');
-          }
-        } catch (error) {
-          console.error('Error deleting item:', error);
-        }
-      };
+        fetchData();
+        showNotification(`Sucessfully updated item ${editItemId}`, 'ok', notificationRef)
+      } else {
+        showNotification('Failed to update item', 'error', notificationRef)
+      }
+    } catch (error) {
+      showNotification(`Error updating item: ${error}`, 'error', notificationRef)
+    }
+  };
+  const handleCancelUpdate = () => {
+    // Reset edit state
+    setEditItemId(null);
+    setUpdatedItem({});
+  };
 
-    return (
-        <div>
-          <h1>Item List</h1>
-          <table className="ItemList-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Owner</th>
-                <th>Expiration Date</th>
-                <th>Shipping</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-            {items.map((item) => (
+  const handleDeleteItem = async (itemId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/items/${itemId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Item deleted successfully, fetch updated data
+        fetchData();
+        showNotification(`Successfully deleted item ${itemId}`, 'ok', notificationRef)
+      } else {
+        showNotification('Failed to delete item', 'error', notificationRef)
+      }
+    } catch (error) {
+      showNotification(`Error deleting item: ${error}`, 'error', notificationRef)
+    }
+  };
+
+  return (
+    <div>
+      <h1>Item List</h1>
+      <table className="ItemList-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Owner</th>
+            <th>Expiration Date</th>
+            <th>Shipping</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>
@@ -174,10 +176,10 @@ const ItemsList = () => {
               </td>
             </tr>
           ))}
-            </tbody>
-          </table>
-        </div>
-      );
-    };
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default ItemsList

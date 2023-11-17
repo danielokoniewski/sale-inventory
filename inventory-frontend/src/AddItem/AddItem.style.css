@@ -1,34 +1,35 @@
 .form-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 2; /* Ensure the form is above other content */
-  }
-  
-  .form-container p {
-    display: block;
-    margin: 20px;
-  }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  /* Ensure the form is above other content */
+}
 
-  .form-container input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 5px;
-  }
-  
-  .form-container button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .form-container button[type="button"] {
-    background-color: #f44336;
-    margin-right: 10px;
-  }
+.form-container p {
+  display: block;
+  margin: 20px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 5px;
+}
+
+.form-container button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-container button[type="button"] {
+  background-color: #f44336;
+  margin-right: 10px;
+}

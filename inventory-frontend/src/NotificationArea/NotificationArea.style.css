@@ -1,0 +1,35 @@
+.hidden {
+    display: none;
+    padding: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+}
+
+.notification {
+    position_: fixed;
+    padding: 10px;
+    border-radius: 5px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    /* Ensure the form is above other content */
+}
+
+.error {
+    color: red;
+    border: 1px solid darkred;
+    background-color: rgb(255, 127, 127);
+}
+
+.ok {
+    color: green;
+    border: 1px solid darkgreen;
+    background-color: rgb(127, 255, 127);
+}
+
+.info {
+    color: darkgoldenrod;
+    border: 1px solid yellow;
+    background-color: rgb(255, 213, 107);
+}
