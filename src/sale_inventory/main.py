@@ -3,9 +3,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from starlette.middleware.cors import CORSMiddleware
-from starlette.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
+from .authentication import auth_router
 from .database import Base, DatabaseRepository
 from .router import router, set_repository
 
@@ -28,5 +29,6 @@ app.add_middleware(CORSMiddleware,
                    allow_headers=["*"])
 
 app.include_router(router=router)
+app.include_router(router=auth_router)
 
 app.mount("/", StaticFiles(directory="inventory-frontend/build", html=True), name="frontend")
